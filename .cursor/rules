@@ -1,0 +1,60 @@
+# AgriPort Optimizer Project Rules
+
+## Core Operational Rules
+- All AI agents must read project_context.md before any work.
+- Follow the Ultimate Vibe Architecting Roadmap phases explicitly.
+- Never modify rules files without explicit approval.
+- Use security-first development practices.
+- Report the phase and step being executed with each contribution.
+
+## Security Rules
+- Validate all user inputs to prevent injection attacks.
+- Sanitize data before storage or display.
+- Never include API keys, credentials, or sensitive data in code.
+- Implement proper error handling with appropriate user feedback.
+- Use parameterized queries for database interactions.
+- Set appropriate CORS policies.
+- Implement rate limiting on API endpoints.
+- Follow the principle of least privilege in all systems.
+- Protect against common web vulnerabilities (OWASP Top 10).
+
+## Development Guidelines
+- Follow PEP 8 for Python code style.
+- Write tests for all core functionality.
+- Document all functions, classes, and modules.
+- Use type hints in Python code.
+- Implement proper error handling and logging.
+- Keep functions small and focused on a single responsibility.
+- Use clear variable and function names that reflect their purpose.
+- Avoid code duplication through appropriate abstraction.
+- Structure code for maintainability and readability.
+- Separate concerns appropriately (data access, business logic, presentation).
+
+## Framework Usage
+- Flask for backend API.
+- GeoPandas for geospatial data processing.
+- OSRM for routing calculations.
+- Folium (Leaflet.js) for map visualization.
+- PostgreSQL with PostGIS for data storage.
+- Docker for containerization.
+
+## Project Structure Consistency
+- Maintain the agreed folder structure.
+- Place reusable utility functions in the utils directory.
+- Keep templates in the templates directory.
+- Store static assets in the static directory.
+- Follow RESTful principles for API design.
+
+## Performance Considerations
+- Optimize database queries for performance.
+- Precompute distances where possible.
+- Implement caching for frequently accessed data.
+- Optimize map rendering for performance (limit polygons, simplify geometries).
+- Use appropriate indexing in the database.
+
+## Update Process
+- Update project_context.md after each significant contribution.
+- Document all decisions and their rationale.
+- Record challenges and their solutions.
+- Track progress against the roadmap phases.
+- Document any deviations from the plan with justification.
