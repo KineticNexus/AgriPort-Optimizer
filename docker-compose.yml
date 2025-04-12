@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Flask web application
+  webapp:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./data:/app/data
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - DATABASE_URI=postgresql://postgres:postgres@db:5432/agriport
+      - OSRM_URL=http://osrm:5000
+    depends_on:
+      - db
+      - osrm
+    restart: unless-stopped
+    command: flask run --host=0.0.0.0 --port=5000
+
+  # PostgreSQL database with PostGIS extension
+  db:
+    image: postgis/postgis:14-3.3
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=agriport
+    restart: unless-stopped
+
+  # OSRM routing engine
+  osrm:
+    image: osrm/osrm-backend:v5.27.1
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./data/osm:/data
+    # For demo, we'll use a pre-processed Argentina OSM file
+    # In production, you would run the preprocessing steps first
+    command: osrm-routed --algorithm mld /data/argentina-latest.osrm
+    restart: unless-stopped
+
+  # PgAdmin for database management (optional)
+  pgadmin:
+    image: dpage/pgadmin4:7.6
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@agriport.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
